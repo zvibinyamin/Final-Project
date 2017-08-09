@@ -16,5 +16,5 @@ We based our project on an open-source named FreeTTS which converts text to spee
 The audio detection field entered the spotlight and received many significant developments in the past recent years. We can see that Apple has developed and is constantly improving the Siri system and also Microsoft has done the same with their Cortana system.
 
 <p align="center">
-  <img src="https://github.com/zvibinyamin/Final-Project/blob/master/pictures/MainGui.jpg?raw=true" width="600"/>
+  <img src="https://github.com/zvibinyamin/Final-Project/blob/master/pictures/MainGui.png?raw=true" width="500"/>
 </p>
