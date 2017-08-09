@@ -67,18 +67,19 @@ def combine_3_wav_files(dir_1, dir_2, dir_3, result_dir, line):
     os.remove(dir_3)
 
 
-def create_all_emph_options(new_path, audio_name, speaker):
+def create_all_emph_options(new_path, audio_name):
     sentence = audio_name.split()
     emphasised_list = []
+
+    # jar__name = speaker + '.jar'
+    jar__name = 'FreeTTS_kevin_mean2.5.jar'
+
+    # create all emphasis options.
     for i, word in enumerate(sentence):  # i,line in enumerate(all_lines)
         before = fromListToStr(sentence, 0, i)
         emph = '%' + fromListToStr(sentence, i, i + 1) + '%'
         after = fromListToStr(sentence, i + 1, len(sentence))
         word_emph = before + emph + after
-
-        # jar__name = speaker + '.jar'
-        jar__name = 'FreeTTS_kevin_pitch95_rate_70_volume085.jar'
-        print('calling jar ', i)
 
         tmp_file = new_path + '/' + 'tmp'
         if os.path.exists(tmp_file):
@@ -109,7 +110,7 @@ def create_all_emph_options(new_path, audio_name, speaker):
                 combine_2_wav_files(before_dir, emph_dir,result_dir, word_emph)
             # A middle word was emphasised.
             else:
-                combine_3_wav_files(before_dir, emph_dir, after_dir, result_dir, word_emph) # new_path istead of afer 2
+                combine_3_wav_files(before_dir, emph_dir, after_dir, result_dir, word_emph) # new_path instead of afer 2
 
             # Remove inner file:
             shutil.rmtree(tmp_file)
@@ -121,7 +122,7 @@ def create_all_emph_options(new_path, audio_name, speaker):
 
 jar_path = r'C:/Users/akiva/OneDrive/Coding_Projects/final_project/netbeans_workspace/FreeTTS-master'
 new_path = r'C:/Users/akiva/Desktop/algo'
-audio_name = 'do something dont think just do it'
-speaker = 'kevin'
-ans = create_all_emph_options(new_path, audio_name, speaker)
+audio_name = 'see the bombers fly up'
+# speaker = 'kevin' # Future options: make it compatable to four speakers.
+ans = create_all_emph_options(new_path, audio_name)
 print(ans)
