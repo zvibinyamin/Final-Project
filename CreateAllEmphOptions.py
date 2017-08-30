@@ -2,8 +2,9 @@ import subprocess
 import os
 import shutil
 from pydub import AudioSegment
+import ntpath
 
-
+jar_path = r'/home/akiva/Documents/Do_not_delete'
 
 def fromListToStr(list, _from, _till):
     str = ''
@@ -17,7 +18,6 @@ def detect_leading_silence(sound, silence_threshold=-50.0, chunk_size=10):
     sound is a pydub.AudioSegment
     silence_threshold in dB
     chunk_size in ms
-
     iterate over chunks until you find the first one with sound
     '''
     trim_ms = 0 # ms
@@ -72,7 +72,7 @@ def create_all_emph_options(new_path, audio_name):
     emphasised_list = []
 
     # jar__name = speaker + '.jar'
-    jar__name = 'FreeTTS_kevin_mean2.5.jar'
+    jar__name = 'kevin_pitch120_rate70_volume085.jar'
 
     # create all emphasis options.
     for i, word in enumerate(sentence):  # i,line in enumerate(all_lines)
@@ -82,6 +82,7 @@ def create_all_emph_options(new_path, audio_name):
         word_emph = before + emph + after
 
         tmp_file = new_path + '/' + 'tmp'
+        # tmp_file = os.path.join(new_path, 'tmp')
         if os.path.exists(tmp_file):
             shutil.rmtree(tmp_file)
         os.makedirs(tmp_file)
@@ -89,13 +90,13 @@ def create_all_emph_options(new_path, audio_name):
         # before:
         if before is not '':
             print('executed before')
-            subprocess.call(['cd', jar_path, '&&', 'java', '-jar', jar__name, tmp_file, before], shell=True)
+            subprocess.call(['cd '+ jar_path+ ' && '+ 'java'+ ' -jar '+  jar__name+' '+ tmp_file+ ' '+ before], shell=True)
         # emph:
         print('this is the call:', 'cd', jar_path, '&&', 'java', '-jar', jar__name, tmp_file, emph)
-        subprocess.call(['cd', jar_path, '&&', 'java', '-jar', jar__name, tmp_file, emph], shell=True)
+        subprocess.call(['cd '+ jar_path+ ' && '+ 'java '+ '-jar '+ jar__name+' '+tmp_file+' '+ emph], shell=True)
         # after:
         if after is not '':
-            subprocess.call(['cd', jar_path, '&&', 'java', '-jar', jar__name, tmp_file, after], shell=True)
+            subprocess.call(['cd '+ jar_path+ ' && '+ ' java '+ ' -jar '+ jar__name+ ' '+ tmp_file+' '+ after], shell=True)
 
         before_dir = tmp_file + '/' + before + ".wav"
         emph_dir = tmp_file + '/' + emph + ".wav"
@@ -119,10 +120,9 @@ def create_all_emph_options(new_path, audio_name):
         emphasised_list.append(new_path + '/' + word_emph)
     return emphasised_list
 
-
-jar_path = r'C:/Users/akiva/OneDrive/Coding_Projects/final_project/netbeans_workspace/FreeTTS-master'
-new_path = r'C:/Users/akiva/Desktop/algo'
+'''
+all_options_path = r'/home/akiva/Documents/Do_not_delete/all_options_emphsis'
 audio_name = 'see the bombers fly up'
-# speaker = 'kevin' # Future options: make it compatable to four speakers.
-ans = create_all_emph_options(new_path, audio_name)
+ans = create_all_emph_options(all_options_path, audio_name)
 print(ans)
+'''
